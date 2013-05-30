@@ -10,15 +10,17 @@
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		$.ajax(jobPath + clientCoveragePath, {
 			dataType: "json",
-			success: callback,
+			success: function (data) {
+				return callback(null, data);
+			},
 			error: function () {
-				callback(new Error("client coverage not found: " + jobPath));
+				return callback(new Error("client coverage not found: " + jobPath));
 			}
 		});
 	};
 
 	var getServerCoverage = function getServerCoverage(jobPath, callback) {
-
+		return callback(null, null);
 	};
 
 	var processJob = function processJob (idx, jobData) {
