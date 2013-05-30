@@ -42,12 +42,12 @@
 			koJob.coverages.client = data.coverage;
 		});
 
-		getServerCoverage(jobData.url, function (err, data) {
-			if (err) {
-				return console.log(err);
-			}
-			koJob.coverages.server = data.coverage;
-		});
+		// getServerCoverage(jobData.url, function (err, data) {
+		// 	if (err) {
+		// 		return console.log(err);
+		// 	}
+		// 	koJob.coverages.server = data.coverage;
+		// });
 
 		koData.push(koJob);
 	};
