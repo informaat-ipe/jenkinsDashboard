@@ -7,7 +7,7 @@
 	var basePath = 'http://hudson.local:8080';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
-	var clientCoveragePath = "ws/coverage-reports/client-coverage.json";
+	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
 
 	var koData = [];
 
