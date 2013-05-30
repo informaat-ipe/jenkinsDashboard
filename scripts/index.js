@@ -41,11 +41,9 @@
 		var jobs = $(data.jobs);
 
 		jobs.each(processJob);
-		$.when($.pluck(jobs, 'url').map(getClientCoverage)).then(function (results) {
-			$(results).each(function (idx, result) {
-				console.log(result);
-			});
-			console.log(koData);
+		console.log($.pluck(jobs, 'url').map(getClientCoverage));
+		$.when($.pluck(jobs, 'url').map(getClientCoverage)).then(function () {
+			console.log(arguments);
 		});
 
 		// display KO template
