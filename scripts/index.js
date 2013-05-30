@@ -11,9 +11,11 @@
 		$.ajax(jobPath + clientCoveragePath, {
 			dataType: "json",
 			success: function (data) {
+				console.log(arguments);
 				return callback(null, data);
 			},
 			error: function () {
+				console.log("ERROR");
 				return callback(new Error("client coverage not found: " + jobPath));
 			}
 		});
@@ -51,7 +53,6 @@
 	};
 
 	window.handleJenkinsCallback = function handleJenkinsCallback (data) {
-		console.log(data);
 		$(data.jobs).each(processJob);
 	};
 
