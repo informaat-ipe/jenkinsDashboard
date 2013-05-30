@@ -43,6 +43,7 @@
 		jobs.each(processJob)
 		$.when($.pluck(jobs, 'url').map(getClientCoverage)).done(function (results) {
 			console.log(results);
+			console.log(koData);
 		});
 
 		// display KO template
