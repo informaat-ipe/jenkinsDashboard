@@ -41,7 +41,7 @@
 		var jobs = $(data.jobs);
 
 		jobs.each(processJob)
-		$.when(jobs.pluck('url').map(getClientCoverage)).done(function (results) {
+		$.when($.pluck(jobs, 'url').map(getClientCoverage)).done(function (results) {
 			console.log(results);
 		});
 
