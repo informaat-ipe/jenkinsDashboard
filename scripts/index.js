@@ -40,9 +40,11 @@
 		// for each job
 		var jobs = $(data.jobs);
 
-		jobs.each(processJob)
-		$.when($.pluck(jobs, 'url').map(getClientCoverage)).done(function (results) {
-			console.log(results);
+		jobs.each(processJob);
+		$.when($.pluck(jobs, 'url').map(getClientCoverage)).then(function (results) {
+			$(results).each(function (idx, result) {
+				console.log(result);
+			});
 			console.log(koData);
 		});
 
