@@ -8,6 +8,7 @@
 	var koData = [];
 
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
+		console.log(jobPath + clientCoveragePath);
 		$.ajax(jobPath + clientCoveragePath, {
 			dataType: "json",
 			success: function (data) {
