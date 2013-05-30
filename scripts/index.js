@@ -10,7 +10,10 @@
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		$.ajax(jobPath + clientCoveragePath, {
 			dataType: "json",
-			success: callback
+			success: callback,
+			error: function () {
+				callback(new Error("client coverage not found: " + jobPath));
+			}
 		});
 	};
 
@@ -28,11 +31,17 @@
 			}
 		};
 
-		getClientCoverage(jobData.url, function (data) {
+		getClientCoverage(jobData.url, function (err, data) {
+			if (err) {
+				return console.log(err);
+			}
 			koJob.coverages.client = data.coverage;
 		});
 
-		getServerCoverage(jobData.url, function (data) {
+		getServerCoverage(jobData.url, function (err, data) {
+			if (err) {
+				return console.log(err);
+			}
 			koJob.coverages.server = data.coverage;
 		});
 
