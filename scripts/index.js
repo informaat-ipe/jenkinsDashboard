@@ -1,24 +1,19 @@
 (function ($) {
+	$.pluck = function(arr, key) { 
+	    return $.map(arr, function(e) { return e[key]; }) 
+	}
+
 	// configuration
 	var basePath = 'http://hudson.local:8080';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
-	var clientCoveragePath = "ws/client/client.json";
+	var clientCoveragePath = "ws/coverage-reports/client-coverage.json";
 
 	var koData = [];
 
-	var getClientCoverage = function getClientCoverage(jobPath, callback) {
-		console.log(jobPath + clientCoveragePath);
-		$.ajax(jobPath + clientCoveragePath, {
-			dataType: "json",
-			success: function (data) {
-				console.log(arguments);
-				return callback(null, data);
-			},
-			error: function () {
-				console.log("ERROR");
-				return callback(new Error("client coverage not found: " + jobPath));
-			}
+	var getClientCoverage = function getClientCoverage(jobPath) {
+		return $.ajax(jobPath + clientCoveragePath, {
+			dataType: "json"
 		});
 	};
 
@@ -27,6 +22,7 @@
 	};
 
 	var processJob = function processJob (idx, jobData) {
+		// retrieve job information (name, status, path)
 		var koJob = {
 			name: jobData.name,
 			buildSuccess: jobData.color === "blue",
@@ -36,42 +32,25 @@
 			}
 		};
 
-		getClientCoverage(jobData.url, function (err, data) {
-			if (err) {
-				return console.log(err);
-			}
-			koJob.coverages.client = data.coverage;
-		});
-
-		// getServerCoverage(jobData.url, function (err, data) {
-		// 	if (err) {
-		// 		return console.log(err);
-		// 	}
-		// 	koJob.coverages.server = data.coverage;
-		// });
-
+		// add job and coverage information to KO data source
 		koData.push(koJob);
 	};
 
 	window.handleJenkinsCallback = function handleJenkinsCallback (data) {
-		$(data.jobs).each(processJob);
+		// for each job
+		var jobs = $(data.jobs);
+
+		jobs.each(processJob)
+		$.when(jobs.pluck('url').map(getClientCoverage)).done(function (results) {
+			console.log(results);
+		});
+
+		// display KO template
 	};
 
 	// get a list of current jobs
 	$.ajax(apiJobListPath, {
-		dataType: "jsonp",
-		jsonp: "jsonp",
-		jsonpCallback: "handleJenkinsCallback"
+		dataType: "json",
+		success: handleJenkinsCallback
 	});
-	// for each job
-
-		// retrieve job information (name, status, path)
-
-		// get coverage information for client
-
-		// get coverage information for server
-
-		// add job and coverage information to KO data source
-
-	// display KO template
 })(window.jQuery);
