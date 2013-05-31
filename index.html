@@ -5,13 +5,22 @@
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="styles/darkstrap-v0.9.0.css" />
 		<style>
+			.table {
+				font-size: 2em;
+				line-height: 2.5em;
+			}
+
 			.table td.number {
 				text-align :right;
+				font-weight: bold;
 			}
 
 			.low-coverage {
-				font-weight: bold;
 				color: rgb(255,0,0);
+			}
+
+			.coverage-ok {
+				color: rgb(0,255,0);
 			}
 
 			.error .low-coverage {
@@ -26,16 +35,18 @@
 			<thead>
 				<tr>
 					<th>Story name</th>
+					<th>Build status</th>
 					<th>Client coverage</th>
 					<th>Server coverage</th>
 					<th>Last commit</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: $root">
-				<tr data-bind="css: {success: buildSuccess, error: buildFailed, warning: buildPending}">
+				<tr>
 					<td data-bind="text: name"></td>
-					<td class="number" data-bind="text: coverages.client, css: {'low-coverage': coverages.clientLow}"></td>
-					<td class="number" data-bind="text: coverages.server, css: {'low-coverage': coverages.serverLow}"></td>
+					<td data-bind="text: buildStatus.status"></td>
+					<td class="number" data-bind="text: coverages.client, css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"></td>
+					<td class="number" data-bind="text: coverages.server, css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"></td>
 					<td class="span4">
 						<!-- ko text: buildStatus.message --><!-- /ko --><br />
 						<small>
