@@ -48,7 +48,7 @@
 
 		jobs.each(processJob);
 		console.log($.pluck(jobs, 'url'));
-		async.map($.pluck(jobs, 'url'), getClientCoverage, function (results) {
+		async.parallel($.pluck(jobs, 'url').map(getClientCoverage), function (results) {
 			console.log(results);
 		});
 
