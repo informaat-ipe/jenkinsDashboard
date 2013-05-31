@@ -11,9 +11,11 @@
 
 	var koData = [];
 
-	var getClientCoverage = function getClientCoverage(jobPath) {
+	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		return $.ajax(jobPath + clientCoveragePath, {
-			dataType: "json"
+			dataType: "json",
+			success: callback,
+			error: callback
 		});
 	};
 
