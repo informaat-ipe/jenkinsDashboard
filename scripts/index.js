@@ -42,8 +42,8 @@
 
 		jobs.each(processJob);
 		console.log($.pluck(jobs, 'url').map(getClientCoverage));
-		$.when($.pluck(jobs, 'url').map(getClientCoverage)).then(function () {
-			console.log(arguments);
+		async.map($.pluck(jobs, 'url'), getClientCoverage, function (results) {
+			console.log(results);
 		});
 
 		// display KO template
