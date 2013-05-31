@@ -42,15 +42,11 @@
 		koData.push(koJob);
 	};
 
-	window.handleJenkinsCallback = function handleJenkinsCallback (data) {
+	handleJenkinsCallback = function handleJenkinsCallback (data) {
 		// for each job
 		var jobs = $(data.jobs);
 
 		jobs.each(processJob);
-		console.log($.pluck(jobs, 'url'));
-		async.parallel($.pluck(jobs, 'url').map(getClientCoverage), function (results) {
-			console.log(results);
-		});
 
 		// display KO template
 	};
