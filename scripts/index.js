@@ -10,6 +10,8 @@
 	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
 	var serverCoveragePath = "ws/coverage-report/coverage.json";
 	var buildStatusPath = "/lastBuild/api/json";
+	var refresh = 60;
+	var lowCoveragePercentage = 70;
 
 	var koData = ko.observableArray([]);
 
@@ -57,9 +59,10 @@
 			buildFailed: ko.computed(function () { return jobData.color === "red" }),
 			buildPending: ko.computed(function () { return jobData.color === "blue_anime"}),
 			coverages: {
-				client: ko.observable(0),
-				server: ko.observable(0)
-
+				_client: ko.observable(0),
+				_server: ko.observable(0),
+				client: null,
+				server: null
 			},
 			buildStatus: {
 				person: ko.observable(),
@@ -69,15 +72,31 @@
 			}
 		};
 
+		koJob.coverages.client = ko.computed(function () {
+			return parseFloat(koJob.coverages._client()).toFixed(2) + "%";
+		});
+
+		koJob.coverages.server = ko.computed(function () {
+			return parseFloat(koJob.coverages._server()).toFixed(2) + "%";
+		});
+
+		koJob.coverages.clientLow = ko.computed(function () {
+			return koJob.coverages._client() < lowCoveragePercentage;
+		});
+
+		koJob.coverages.serverLow = ko.computed(function () {
+			return koJob.coverages._server() < lowCoveragePercentage;
+		});
+
 		getClientCoverage(jobData.url, function (err, results) {
 			if (!err) {
-				koJob.coverages.client(parseFloat(results.coverage).toFixed(2)+"%");
+				koJob.coverages._client(results.coverage);
 			}
 		});
 
 		getServerCoverage(jobData.url, function (err, results) {
 			if (!err) {
-				koJob.coverages.server(parseFloat(results.coverage, 2).toFixed(2)+"%");
+				koJob.coverages._server(results.coverage);
 			}
 		});
 
@@ -101,14 +120,19 @@
 		// display KO template
 	};
 
+	var init = function init () {
+		$.ajax(apiJobListPath, {
+			dataType: "json",
+			success: handleJenkinsCallback
+		});
+	}
 	// get a list of current jobs
-	$.ajax(apiJobListPath, {
-		dataType: "json",
-		success: handleJenkinsCallback
-	});
+	setInterval(init, refresh * 1000);
 
 	ko.applyBindings(koData);
 
+
+	init();
 	/*
 		// When a job resolves, notify all
 		// When all resolves, do the render callback
