@@ -9,7 +9,7 @@
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
 	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
 
-	var koData = [];
+	var koData = ko.observableArray([]);
 
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		return $.ajax(jobPath + clientCoveragePath, {
@@ -30,11 +30,11 @@
 	var processJob = function processJob (idx, jobData) {
 		// retrieve job information (name, status, path)
 		var koJob = {
-			name: jobData.name,
-			buildSuccess: jobData.color === "blue",
+			name: ko.observable(jobData.name),
+			buildSuccess: ko.computed(function () { return jobData.color === "blue"}),
 			coverages: {
-				client: "",
-				server: ""
+				client: ko.observable(""),
+				server: ko.observable("")
 			}
 		};
 
@@ -56,4 +56,25 @@
 		dataType: "json",
 		success: handleJenkinsCallback
 	});
+
+	ko.applyBindings(koData);
+
+	/*
+		// When a job resolves, notify all
+		// When all resolves, do the render callback
+
+		// Create an array of promises for all jobs
+		var allPromise = Q.all([
+			processJob()
+		]);
+
+		// In each job, do two calls -- server and client
+		var jobPromise = Q.all([
+			getClient(),
+			getServer()
+		]);
+
+		
+
+	*/
 })(window.jQuery);
