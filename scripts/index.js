@@ -114,6 +114,7 @@
 	handleJenkinsCallback = function handleJenkinsCallback (data) {
 		// for each job
 		var jobs = $(data.jobs);
+		koData([]);
 
 		jobs.each(processJob);
 
