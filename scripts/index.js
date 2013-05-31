@@ -41,7 +41,7 @@
 		var jobs = $(data.jobs);
 
 		jobs.each(processJob);
-		console.log($.pluck(jobs, 'url').map(getClientCoverage));
+		console.log($.pluck(jobs, 'url'));
 		async.map($.pluck(jobs, 'url'), getClientCoverage, function (results) {
 			console.log(results);
 		});
