@@ -53,6 +53,10 @@
 
 	var processJob = function processJob (idx, jobData) {
 		// retrieve job information (name, status, path)
+		if (jobData.color === "disabled") {
+			return;
+		}
+		
 		var koJob = {
 			name: ko.observable(jobData.name),
 			buildSuccess: ko.computed(function () { return jobData.color === "blue" }),
