@@ -150,12 +150,6 @@ textarea::-webkit-input-placeholder {
   background-color: #34789a;
 }
 
-/* line 18, ../bootstrap/bootstrap/_sprites.scss */
-[class^="icon-"],
-[class*=" icon-"] {
-  background-image: url("../img/glyphicons-halflings.png");
-}
-
 /* White icons with optional class, or on hover/active states of certain elements */
 /* line 44, ../bootstrap/bootstrap/_sprites.scss */
 .icon-white,
