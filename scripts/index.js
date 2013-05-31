@@ -105,10 +105,12 @@
 		});
 
 		getLastBuildStatus(jobData.url, function (err, build) {
-			koJob.buildStatus.person(build.culprits.length >= 1 ? build.culprits[0].fullName.split(' ')[0] : 'Anonymous');
-			koJob.buildStatus.status(build.result || 'No status message');
-			koJob.buildStatus.message((build.changeSet.items.length) ? build.changeSet.items[0].msg : 'No message');
-			koJob.buildStatus.time(new Date( build.timestamp ).toLocaleString());
+			if (build.changeSet.items.length > 0) {
+				koJob.buildStatus.person(build.changeSet.items[0].author.fullName || 'Anonymous');
+				koJob.buildStatus.status(build.result || 'No status message');
+				koJob.buildStatus.message(build.changeSet.items[0].msg || 'No message');
+				koJob.buildStatus.time(new Date( build.timestamp ).toLocaleString());
+			}
 		});
 
 		// add job and coverage information to KO data source
