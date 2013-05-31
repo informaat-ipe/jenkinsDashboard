@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Build Status Informaat CXP</title>
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="styles/darkstrap-v0.9.0.css" />
@@ -44,7 +46,15 @@
 			<tbody data-bind="foreach: $root">
 				<tr>
 					<td data-bind="text: name"></td>
-					<td data-bind="text: buildStatus.status"></td>
+					<td>
+						<!-- ko if: buildStatus.status() === "SUCCESS" -->
+						&#x1F44D;
+						<!-- /ko -->
+						<!-- ko if: buildStatus.status() !== "SUCCESS" -->
+						&#x274C;
+						<!-- /ko -->
+
+					</td>
 					<td class="number" data-bind="text: coverages.client, css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"></td>
 					<td class="number" data-bind="text: coverages.server, css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"></td>
 					<td class="span4">
