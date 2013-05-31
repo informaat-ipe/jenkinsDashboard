@@ -46,15 +46,7 @@
 			<tbody data-bind="foreach: $root">
 				<tr>
 					<td data-bind="text: name"></td>
-					<td>
-						<!-- ko if: buildStatus.status() === "SUCCESS" -->
-						&#x1F44D;
-						<!-- /ko -->
-						<!-- ko if: buildStatus.status() !== "SUCCESS" -->
-						&#x274C;
-						<!-- /ko -->
-
-					</td>
+					<td data-bind="text: buildStatus.status"></td>
 					<td class="number" data-bind="text: coverages.client, css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"></td>
 					<td class="number" data-bind="text: coverages.server, css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"></td>
 					<td class="span4">
