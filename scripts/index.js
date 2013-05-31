@@ -15,7 +15,8 @@
 		return $.ajax(jobPath + clientCoveragePath, {
 			dataType: "json",
 			success: function (data) {
-				callback(null, data),
+				callback(null, data);
+			},
 			error: function () {
 				callback("failed")
 			};
