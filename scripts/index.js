@@ -14,8 +14,11 @@
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		return $.ajax(jobPath + clientCoveragePath, {
 			dataType: "json",
-			success: callback,
-			error: callback
+			success: function (data) {
+				callback(null, data),
+			error: function () {
+				callback("failed")
+			};
 		});
 	};
 
