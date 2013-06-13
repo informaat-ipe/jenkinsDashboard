@@ -11,7 +11,7 @@
 	var serverCoveragePath = "ws/coverage-report/coverage.json";
 	var buildStatusPath = "/lastBuild/api/json";
 	var refresh = 60;
-	var lowCoveragePercentage = 70;
+	var lowCoveragePercentage = 80;
 
 	var koData = ko.observableArray([]);
 

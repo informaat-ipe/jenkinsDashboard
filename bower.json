@@ -1,0 +1,7 @@
+{
+  "name": "jenkinsDashboard",
+  "version": "0.0.0",
+  "dependencies": {
+    "open-sans-fontface": "~1.0.2"
+  }
+}
