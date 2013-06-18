@@ -4,8 +4,8 @@
 	}
 
 	// configuration
-	var basePath = 'http://hudson.local:8080';
-	// var basePath = 'https://hudson.informaat.nl/';
+	
+	var basePath = (window.location.host == 'hudson.local:8080')? 'http://hudson.local:8080' : 'https://hudson.informaat.nl/';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
 	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
@@ -147,8 +147,15 @@
 			success: handleJenkinsCallback
 		});
 	}
+	
+	var reload = function reload() {
+		// Reload the page to pick up changes
+		window.location.reload();
+	};
+	
 	// get a list of current jobs
 	setInterval(init, refresh * 1000);
+	setTimeout(reload, 10 * 60 * 1000);
 
 	ko.applyBindings(koData);
 
