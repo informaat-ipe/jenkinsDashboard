@@ -1,0 +1,22 @@
+{
+  "name": "jenkinsDashboard",
+  "version": "0.0.0",
+  "description": "CXP Development Dashboard",
+  "main": "index.js",
+  "dependencies": {
+    "bower": "~0.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/informaat-ipe/jenkinsDashboard.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "gitHead": "686d066ba4de05d89a8a06b59adee9a4b877fc97",
+  "readmeFilename": "README.md",
+  "private": "true"
+}

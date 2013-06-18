@@ -4,14 +4,15 @@
 	}
 
 	// configuration
-	var basePath = 'http://hudson.local:8080';
+	// var basePath = 'http://hudson.local:8080';
+	var basePath = 'https://hudson.informaat.nl/';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
 	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
 	var serverCoveragePath = "ws/coverage-report/coverage.json";
 	var buildStatusPath = "/lastBuild/api/json";
 	var refresh = 60;
-	var lowCoveragePercentage = 80;
+	var lowCoveragePercentage = 79;
 
 	var koData = ko.observableArray([]);
 
@@ -77,11 +78,11 @@
 		};
 
 		koJob.coverages.client = ko.computed(function () {
-			return parseFloat(koJob.coverages._client()).toFixed(2) + "%";
+			return parseFloat(koJob.coverages._client()).toFixed(0) + "%";
 		});
 
 		koJob.coverages.server = ko.computed(function () {
-			return parseFloat(koJob.coverages._server()).toFixed(2) + "%";
+			return parseFloat(koJob.coverages._server()).toFixed(0) + "%";
 		});
 
 		koJob.coverages.clientLow = ko.computed(function () {
@@ -106,16 +107,29 @@
 
 		getLastBuildStatus(jobData.url, function (err, build) {
 			if (build.changeSet.items.length > 0) {
-				koJob.buildStatus.person(build.changeSet.items[0].author.fullName || 'Anonymous');
-				koJob.buildStatus.status(build.result || 'No status message');
+				koJob.buildStatus.person(parseName(build.changeSet.items[0].author.fullName) || 'Anonymous');
+				koJob.buildStatus.status((build.result)? build.result : 'pending');
 				koJob.buildStatus.message(build.changeSet.items[0].msg || 'No message');
-				koJob.buildStatus.time(new Date( build.timestamp ).toLocaleString());
+				koJob.buildStatus.time(humanizeTime(new Date( build.timestamp )));
 			}
 		});
 
 		// add job and coverage information to KO data source
 		koData.push(koJob);
 	};
+	
+	humanizeTime = function(date) {
+		// Returns a humanized time
+		return humaneDate(date);
+	};
+	
+	parseName = function(name) {
+		// return a first name only
+		return name.split(/[ .]+/)[0];
+	};
+	
+	// TODO: add a method to compare the branch coverage against the release coverage -- show if merging will make quality go up or down
+	// ⬇	⬆	⬌	⬈	⬋
 
 	handleJenkinsCallback = function handleJenkinsCallback (data) {
 		// for each job

@@ -2,6 +2,10 @@
   "name": "jenkinsDashboard",
   "version": "0.0.0",
   "dependencies": {
-    "open-sans-fontface": "~1.0.2"
+    "open-sans-fontface": "~1.0.2",
+    "jquery": "~2.0.2",
+    "knockout": "~2.2.1",
+    "knockout.mapping": "~2.0.1",
+    "humane-dates": "latest"
   }
 }
