@@ -11,7 +11,7 @@
 			}
 			
 			body {
-				font: normal normal normal 16px/30px 'Open Sans', Helvetica, sans-serif;
+				font: normal normal 300 20px/30px 'Open Sans', Helvetica, sans-serif;
 				background: #000; color: #eee;
 			}
 			
@@ -19,6 +19,7 @@
 				font: inherit;
 				font-size: 110%; line-height: 30px;
 				padding: 10px 20px;
+				color: #666;
 			}
 			
 			h1, tbody td:nth-child(2) {
@@ -61,6 +62,10 @@
 				padding: 10px;
 			}
 			
+			.number span:after {
+				content: '%';
+			}
+			
 			.success td:first-child,
 			.failure td:first-child {
 				font-size: 150%;
@@ -90,6 +95,14 @@
 			.error .low-coverage {
 				color: rgb(176,0,0);
 			}
+			
+			th.icon   { }
+			th.name   { }
+			th.client {}
+			th.server {}
+			th.mesg   { width: 30%; }
+			th.person { width: 10%; }
+			th.time   { width: 10%; }
 		</style>
 	</head>
 
@@ -98,22 +111,21 @@
 		<table>
 			<thead>
 				<tr>
-					<th></th>
-					<th>Story name</th>
-					<th>Client coverage</th>
-					<th>Server coverage</th>
-					<th>Message</th>
-					<th>By</th>
-					<th>Commit</th>
+					<th class="icon" ></th>
+					<th class="name" >Story name</th>
+					<th class="client">Client coverage</th>
+					<th class="server">Server coverage</th>
+					<th class="mesg" >Message</th>
+					<th class="person">By</th>
+					<th class="time">Commit</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: $root">
-				<!-- <tr data-bind="css: {success : buildStatus.status}"> -->
-				<tr data-bind="css: {'success': buildStatus.status() === 'SUCCESS', 'failure': buildStatus.status() !== 'SUCCESS'}">
+				<tr data-bind="css: {'success': buildSuccess, failure: buildFailed, pending: buildPending}">
 					<td></td>
 					<td data-bind="text: name"></td>
-					<td class="number" data-bind="text: coverages.client, css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"></td>
-					<td class="number" data-bind="text: coverages.server, css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"></td>
+					<td class="number" data-bind="css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"><span data-bind="text: coverages.client"></span></td>
+					<td class="number" data-bind="css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"><span data-bind="text: coverages.server"></span></td>
 					<td data-bind="text: buildStatus.message"></td>
 					<td data-bind="text: buildStatus.person"></td>
 					<td data-bind="text: buildStatus.time" class="time"></td>

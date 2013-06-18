@@ -1,11 +1,11 @@
 (function ($) {
 	$.pluck = function(arr, key) { 
-	    return $.map(arr, function(e) { return e[key]; }) 
-	}
+	    return $.map(arr, function(e) { return e[key]; });
+	};
 
 	// configuration
 	
-	var basePath = (window.location.host == 'hudson.local:8080')? 'http://hudson.local:8080' : 'https://hudson.informaat.nl/';
+	var basePath = (window.location.host == 'hudson.local:8080') ? 'http://hudson.local:8080' : 'https://hudson.informaat.nl/';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
 	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
@@ -15,6 +15,18 @@
 	var lowCoveragePercentage = 79;
 
 	var koData = ko.observableArray([]);
+	
+	var getCoverage = function(path, callback) {
+		return $.ajax(path, {
+			dataType: "json",
+			success: function (data) {
+				callback(null, data);
+			},
+			error: function () {
+				callback("failed");
+			}
+		});
+	}
 
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		return $.ajax(jobPath + clientCoveragePath, {
@@ -23,7 +35,7 @@
 				callback(null, data);
 			},
 			error: function () {
-				callback("failed")
+				callback("failed");
 			}
 		});
 	};
@@ -35,7 +47,7 @@
 				callback(null, data);
 			},
 			error: function () {
-				callback("failed")
+				callback("failed");
 			}
 		});
 	};
@@ -50,19 +62,21 @@
 				callback("failed");
 			}
 		});
-	}
+	};
 
 	var processJob = function processJob (idx, jobData) {
+		// console.log(jobData);
+		
 		// retrieve job information (name, status, path)
 		if (jobData.color === "disabled") {
 			return;
-		}
+		};
 		
 		var koJob = {
 			name: ko.observable(jobData.name),
-			buildSuccess: ko.computed(function () { return jobData.color === "blue" }),
-			buildFailed: ko.computed(function () { return jobData.color === "red" }),
-			buildPending: ko.computed(function () { return jobData.color === "blue_anime"}),
+			buildSuccess: ko.computed(function () { return jobData.color === "blue"; }),
+			buildFailed:  ko.computed(function () { return jobData.color === "red"; }),
+			buildPending: ko.computed(function () { return jobData.color === "blue_anime"; }),
 			coverages: {
 				_client: ko.observable(0),
 				_server: ko.observable(0),
@@ -78,11 +92,11 @@
 		};
 
 		koJob.coverages.client = ko.computed(function () {
-			return parseFloat(koJob.coverages._client()).toFixed(0) + "%";
+			return parseFloat(koJob.coverages._client()).toFixed(0);
 		});
 
 		koJob.coverages.server = ko.computed(function () {
-			return parseFloat(koJob.coverages._server()).toFixed(0) + "%";
+			return parseFloat(koJob.coverages._server()).toFixed(0);
 		});
 
 		koJob.coverages.clientLow = ko.computed(function () {
@@ -93,19 +107,22 @@
 			return koJob.coverages._server() < lowCoveragePercentage;
 		});
 
-		getClientCoverage(jobData.url, function (err, results) {
+		// Get client coverage
+		getCoverage(jobData.url + clientCoveragePath, function (err, results) {
 			if (!err) {
 				koJob.coverages._client(results.coverage);
 			}
 		});
 
-		getServerCoverage(jobData.url, function (err, results) {
+		// Get server coverage
+		getCoverage(jobData.url + serverCoveragePath, function (err, results) {
 			if (!err) {
 				koJob.coverages._server(results.coverage);
 			}
 		});
 
 		getLastBuildStatus(jobData.url, function (err, build) {
+			console.log(build);
 			if (build.changeSet.items.length > 0) {
 				koJob.buildStatus.person(parseName(build.changeSet.items[0].author.fullName) || 'Anonymous');
 				koJob.buildStatus.status((build.result)? build.result : 'pending');
@@ -146,7 +163,7 @@
 			dataType: "json",
 			success: handleJenkinsCallback
 		});
-	}
+	};
 	
 	var reload = function reload() {
 		// Reload the page to pick up changes
