@@ -16,22 +16,23 @@
 			}
 			
 			h1 {
+				display: none;
 				font: inherit;
+/*				font-style: italic;*/
 				font-size: 110%; line-height: 30px;
 				padding: 10px 20px;
-				color: #666;
+				color: #444;
 			}
 			
 			h1, tbody td:nth-child(2) {
 				font-weight: 300;
-				font-style: italic;
 				text-transform: uppercase;
 				text-align: left;
 			}
 			
 			th {
 				text-align: left;
-				font-size: 80%;
+				font-size: 70%;
 				font-weight: normal;
 				text-transform: uppercase;
 			}
@@ -46,15 +47,11 @@
 			}
 			
 			thead {
-				color: #999;
+				color: #666;
 			}
 			
-			tbody tr {
+			tbody tr.failure {
 				background: #840018;
-			}
-			
-			tbody tr.success {
-				background: inherit; color: inherit;
 			}
 			
 			
@@ -112,7 +109,7 @@
 			<thead>
 				<tr>
 					<th class="icon" ></th>
-					<th class="name" >Story name</th>
+					<th class="name" >Branch</th>
 					<th class="client">Client coverage</th>
 					<th class="server">Server coverage</th>
 					<th class="mesg" >Message</th>
