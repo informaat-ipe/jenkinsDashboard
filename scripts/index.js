@@ -122,7 +122,7 @@
 		});
 
 		getLastBuildStatus(jobData.url, function (err, build) {
-			console.log(build);
+			// console.log(build);
 			if (build.changeSet.items.length > 0) {
 				koJob.buildStatus.person(parseName(build.changeSet.items[0].author.fullName) || 'Anonymous');
 				koJob.buildStatus.status((build.result)? build.result : 'pending');
