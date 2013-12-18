@@ -178,12 +178,14 @@
 
 			var timer = function() {
 				// Returns a string like 1501 for 15:00, so it is easy to compare..
-				var now = (new Date().getHours * 100 + new Date().getMinutes());
-				return (now >= Date(930) && now <= Date(945)) ? show('#Burndowns') : show('#Builds');
+				var now = (new Date().getHours() * 100 + new Date().getMinutes());
+				return (now >= 925 && now <= 950) ? show('#Burndowns') : show('#Builds');
 			}
 
 			// The page reloads every 5 minutes, so we can also check this on load.
-			var id = setInterval(timer, 5*60*1000);
+			var id = setInterval(timer(), 5*60*1000);
+
+			// timer();
 		</script>
 	</body>
 </html>
