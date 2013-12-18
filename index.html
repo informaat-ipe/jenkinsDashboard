@@ -112,7 +112,7 @@
 
 				#Burndowns img {
 					float: left;
-					height: 50%;
+					/*height: 50%;*/
 					padding: 10px;
 				}
 		</style>
@@ -179,11 +179,12 @@
 			var timer = function() {
 				// Returns a string like 1501 for 15:00, so it is easy to compare..
 				var now = (new Date().getHours() * 100 + new Date().getMinutes());
+				console.log('Called %s', now);
 				return (now >= 925 && now <= 950) ? show('#Burndowns') : show('#Builds');
 			}
 
-			// The page reloads every 5 minutes, so we can also check this on load.
-			var id = setInterval(timer(), 5*60*1000);
+			// The page reloads every 3 minutes, but we could also check on load as the page reloads every 10
+			var id = (timer(), setInterval(timer, 3*60*1000));
 
 			// timer();
 		</script>
