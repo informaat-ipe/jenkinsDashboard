@@ -18,7 +18,7 @@
 			h1 {
 				display: none;
 				font: inherit;
-/*				font-style: italic;*/
+				/* font-style: italic;*/
 				font-size: 110%; line-height: 30px;
 				padding: 10px 20px;
 				color: #444;
@@ -69,7 +69,7 @@
 			}
 
 			.success td:first-child:after {
-/*				content: '\263A';*/
+			/* content: '\263A';*/
 			}
 			
 			.failure td:first-child:after {
@@ -100,35 +100,63 @@
 			th.mesg   { width: 25%; }
 			th.person { width: 12.5%; }
 			th.time   { width: 12.5%; }
+
+
+			#Burndowns {
+				position: absolute;
+				top: 0; right: 0; bottom: 0; left: 0;
+				/*background: #fff;*/
+				padding: 10px;
+				display: none;
+			}
+
+				#Burndowns img {
+					float: left;
+					height: 50%;
+					padding: 10px;
+				}
 		</style>
 	</head>
 
 	<body>
-		<h1>Informaat CXP Dashboard</h1>
-		<table>
-			<thead>
-				<tr>
-					<th class="icon" ></th>
-					<th class="name" >Branch</th>
-					<th class="client">Client</th>
-					<th class="server">Server</th>
-					<th class="mesg" >Message</th>
-					<th class="person">By</th>
-					<th class="time">Commit</th>
-				</tr>
-			</thead>
-			<tbody data-bind="foreach: $root">
-				<tr data-bind="css: {'success': buildSuccess, failure: buildFailed, pending: buildPending}">
-					<td></td>
-					<td data-bind="text: name"></td>
-					<td class="number" data-bind="css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"><span data-bind="text: coverages.client"></span></td>
-					<td class="number" data-bind="css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"><span data-bind="text: coverages.server"></span></td>
-					<td data-bind="text: buildStatus.message"></td>
-					<td data-bind="text: buildStatus.person"></td>
-					<td data-bind="text: buildStatus.time" class="time"></td>
-				</tr>
-			</tbody>
-		</table>
+		<div id="Builds">
+			<h1>Informaat CXP Dashboard</h1>
+			<table>
+				<thead>
+					<tr>
+						<th class="icon" ></th>
+						<th class="name" >Branch</th>
+						<th class="client">Client</th>
+						<th class="server">Server</th>
+						<th class="mesg" >Message</th>
+						<th class="person">By</th>
+						<th class="time">Commit</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: $root">
+					<tr data-bind="css: {'success': buildSuccess, failure: buildFailed, pending: buildPending}">
+						<td></td>
+						<td data-bind="text: name"></td>
+						<td class="number" data-bind="css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"><span data-bind="text: coverages.client"></span></td>
+						<td class="number" data-bind="css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"><span data-bind="text: coverages.server"></span></td>
+						<td data-bind="text: buildStatus.message"></td>
+						<td data-bind="text: buildStatus.person"></td>
+						<td data-bind="text: buildStatus.time" class="time"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="Burndowns">
+			<!-- UI -->
+			<img src="https://docs.google.com/spreadsheet/oimg?key=0AoMLeMpVOVUCdE11REFCOXRtREg4dmZYel9ORmsyYmc&oid=2&zx=wdzqarfw5pjw" />
+
+			<!-- OPS -->
+			<img src="https://docs.google.com/spreadsheet/oimg?key=0AoMLeMpVOVUCdHlQUnZIaFRzUFlxZUxUQXk5QmNhaGc&oid=2&zx=1lbrmi8mktu" />
+
+			<!-- UX -->
+			<img src="https://docs.google.com/spreadsheet/oimg?key=0AoMLeMpVOVUCdGZuVXF5VnV3N0VKZG5RMXAtbEZXTnc&oid=2&zx=prruyv1uthfl" />
+		</div>
 		
 		<script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="components/humane-dates/humane.js" type="text/javascript" charset="utf-8"></script>
@@ -136,5 +164,26 @@
 		<script src="components/knockout.mapping/build/output/knockout.mapping-latest.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script src="scripts/index.js"></script>
+
+		<script type="text/javascript" charset="utf-8">
+			var toggle = function() {
+				var $panels = $('#Builds, #Burndowns');
+				$panels.toggle();
+			}
+
+			var show = function(selector) {
+				$('#Builds, #Burndowns').hide();
+				$(selector).show();
+			}
+
+			var timer = function() {
+				// Returns a string like 1501 for 15:00, so it is easy to compare..
+				var now = (new Date().getHours * 100 + new Date().getMinutes());
+				return (now >= Date(930) && now <= Date(945)) ? show('#Burndowns') : show('#Builds');
+			}
+
+			// The page reloads every 5 minutes, so we can also check this on load.
+			var id = setInterval(timer, 5*60*1000);
+		</script>
 	</body>
 </html>
