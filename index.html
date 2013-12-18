@@ -166,20 +166,14 @@
 		<script src="scripts/index.js"></script>
 
 		<script type="text/javascript" charset="utf-8">
-			var toggle = function() {
-				var $panels = $('#Builds, #Burndowns');
-				$panels.toggle();
-			}
-
 			var show = function(selector) {
 				$('#Builds, #Burndowns').hide();
 				$(selector).show();
 			}
 
 			var timer = function() {
-				// Returns a string like 1501 for 15:00, so it is easy to compare..
+				// Returns a string like 1501 for 15:01, so it is easy to compare..
 				var now = (new Date().getHours() * 100 + new Date().getMinutes());
-				console.log('Called %s', now);
 				return (now >= 925 && now <= 950) ? show('#Burndowns') : show('#Builds');
 			}
 
