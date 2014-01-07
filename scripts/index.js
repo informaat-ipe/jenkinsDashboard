@@ -5,7 +5,7 @@
 
 	// configuration
 	
-	var basePath = (window.location.host == 'hudson.local:8080') ? 'http://hudson.local:8080' : 'https://hudson.informaat.nl/';
+	var basePath = 'http://hudson.local';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
 	var clientCoveragePath = "ws/coverage-report/client-coverage.json";
