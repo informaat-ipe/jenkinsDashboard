@@ -1,0 +1,109 @@
+html * {
+	margin: 0; padding: 0; outline: 0; box-sizing: border-box;
+}
+
+body {
+	font: normal normal 300 30px/50px 'Open Sans', Helvetica, sans-serif;
+	background: #000; color: #eee;
+}
+
+h1 {
+	display: none;
+	font: inherit;
+	/* font-style: italic;*/
+	font-size: 110%; line-height: 30px;
+	padding: 10px 20px;
+	color: #444;
+}
+
+h1, tbody td:nth-child(2) {
+	font-weight: 300;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+th {
+	text-align: left;
+	font-size: 70%;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+	tr {
+	border-bottom: 1px solid #444;
+}
+
+thead {
+	color: #666;
+}
+
+tbody tr.failure {
+	background: #840018;
+}
+
+
+th, td {
+	padding: 10px;
+}
+
+.number span:after {
+	content: '%';
+}
+
+.success td:first-child,
+.failure td:first-child {
+	font-size: 150%;
+}
+
+.success td:first-child:after {
+/* content: '\263A';*/
+}
+
+.failure td:first-child:after {
+	content: '\2639';
+}
+
+.table td.number {
+	text-align :right;
+	font-weight: bold;
+}
+
+.low-coverage, .status-icon .icon-remove {
+	color: rgb(255,60,60);
+}
+
+.coverage-ok, .status-icon .icon-thumbs-up {
+	color: rgb(0,190,0);
+}
+
+.error .low-coverage {
+	color: rgb(176,0,0);
+}
+
+th.icon   { }
+th.name   { }
+th.client {}
+th.server {}
+th.mesg   { width: 25%; }
+th.person { width: 12.5%; }
+th.time   { width: 12.5%; }
+
+
+#Burndowns {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	background: #fff;
+	padding: 10px;
+	display: none;
+}
+
+	#Burndowns img {
+		float: left;
+		/*height: 50%;*/
+		padding: 10px;
+	}

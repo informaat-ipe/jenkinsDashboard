@@ -1,12 +1,14 @@
 (function ($) {
-	$.pluck = function(arr, key) { 
-	    return $.map(arr, function(e) { return e[key]; });
+	$.pluck = function(arr, key) {
+		return $.map(arr, function(e) { return e[key]; });
 	};
 
+	// TODO: Why this hard redirection? This way it is impossible to debug locally.
 	// configuration
-    if (window.location.host == 'hudson.local:8080' || window.location.host == '') {
+    if (window.location.host === 'hudson.local:8080' || window.location.host === '') {
         window.location.href = 'http://hudson.local/job/dashboard/ws/index.html';
-    };	
+    }
+
 	var basePath = 'http://hudson.local';
 	var viewName = 'IPE Story Jobs';
 	var apiJobListPath = basePath + '/view/' + encodeURIComponent(viewName) + '/api/json';
@@ -28,7 +30,7 @@
 				callback("failed");
 			}
 		});
-	}
+	};
 
 	var getClientCoverage = function getClientCoverage(jobPath, callback) {
 		return $.ajax(jobPath + clientCoveragePath, {
