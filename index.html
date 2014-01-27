@@ -45,7 +45,7 @@
 			<img src="https://docs.google.com/spreadsheet/oimg?key=0AoMLeMpVOVUCdHlQUnZIaFRzUFlxZUxUQXk5QmNhaGc&oid=2&zx=1lbrmi8mktu" />
 
 			<!-- UX -->
-			<img src="https://docs.google.com/spreadsheet/oimg?key=0AoMLeMpVOVUCdGZuVXF5VnV3N0VKZG5RMXAtbEZXTnc&oid=2&zx=prruyv1uthfl" />
+			<img src="https://docs.google.com/spreadsheet/oimg?key=0AqQCMQcuIHJkdHphVWlJTmlBOHpWcWdzNHdCUGtQUFE&oid=2&zx=d348is958ie1"
 		</div>
 
 		<div id="Ops"></div>
@@ -67,14 +67,14 @@
 				VISIBLE = selector;
 			}
 
-			var timer = function() {
-				// Returns a string like 1501 for 15:01, so it is easy to compare..
-				var now = (new Date().getHours() * 100 + new Date().getMinutes());
-				return (now >= 925 && now <= 950) ? show('#Burndowns') : show('#Builds');
-			}
+			 var timer = function() {
+			 // Returns a string like 1501 for 15:01, so it is easy to compare..
+			 var now = (new Date().getHours() * 100 + new Date().getMinutes());
+			 return (now >= 925 && now <= 950) ? show('#Burndowns') : show('#Builds');
+			 }
 
-			// The page reloads every 3 minutes, but we could also check on load as the page reloads every 10
-			var id = (timer(), setInterval(timer, 3*60*1000));
+			 // The page reloads every 3 minutes, but we could also check on load as the page reloads every 10
+			 var id = (timer(), setInterval(timer, 3*60*1000));
 
 			// If we are NOT in Burndown mode, toggle between builds and dashboard every minute
 			// if('#Burndowns' !== VISIBLE) 
