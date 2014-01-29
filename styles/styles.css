@@ -5,6 +5,7 @@ html * {
 body {
 	font: normal normal 300 30px/50px 'Open Sans', Helvetica, sans-serif;
 	background: #000; color: #eee;
+	cursor: none;
 }
 
 h1 {
