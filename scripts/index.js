@@ -5,9 +5,9 @@
 
 	// TODO: Why this hard redirection? This way it is impossible to debug locally.
 	// configuration
-    // if (window.location.host === 'hudson.local:8080' || window.location.host === '') {
-    //     window.location.href = 'http://hudson.local/job/dashboard/ws/index.html';
-    // }
+    if (window.location.host === 'hudson.local:8080' || window.location.host === '') {
+        window.location.href = 'http://hudson.local/job/dashboard/ws/index.html';
+    }
 
 	var basePath = 'http://hudson.local';
 	var viewName = 'IPE Story Jobs';
@@ -19,7 +19,7 @@
 	var lowCoveragePercentage = 79;
 
 	var koData = ko.observableArray([]);
-	
+
 	var getCoverage = function(path, callback) {
 		return $.ajax(path, {
 			dataType: "json",
@@ -70,12 +70,12 @@
 
 	var processJob = function processJob (idx, jobData) {
 		// console.log(jobData);
-		
+
 		// retrieve job information (name, status, path)
 		if (jobData.color === "disabled") {
 			return;
 		};
-		
+
 		var koJob = {
 			name: ko.observable(jobData.name),
 			buildSuccess: ko.computed(function () { return jobData.color === "blue"; }),
@@ -138,17 +138,17 @@
 		// add job and coverage information to KO data source
 		koData.push(koJob);
 	};
-	
+
 	humanizeTime = function(date) {
 		// Returns a humanized time
 		return humaneDate(date);
 	};
-	
+
 	parseName = function(name) {
 		// return a first name only
 		return name.split(/[ .]+/)[0];
 	};
-	
+
 	// TODO: add a method to compare the branch coverage against the release coverage -- show if merging will make quality go up or down
 	// ⬇	⬆	⬌	⬈	⬋
 
@@ -168,12 +168,12 @@
 			success: handleJenkinsCallback
 		});
 	};
-	
+
 	var reload = function reload() {
 		// Reload the page to pick up changes
 		window.location.reload();
 	};
-	
+
 	// get a list of current jobs
 	setInterval(init, refresh * 1000);
 	setTimeout(reload, 10 * 60 * 1000);
@@ -197,7 +197,7 @@
 			getServer()
 		]);
 
-		
+
 
 	*/
 })(window.jQuery);
