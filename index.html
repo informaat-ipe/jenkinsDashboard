@@ -64,41 +64,45 @@
 		<script src="scripts/index.js"></script>
 
 		<script type="text/javascript" charset="utf-8">
-			var VISIBLE;
-			var BUILDS = true;
-
 			var $burn = $('#Burndowns');
 			var $blds = $('#Builds');
 			var $ops  = $('#Ops');
 
-			var reload = 3;	// reload every 3 minutes
-			var toggle = 1; // toggle every 1 minute
+			var queue = [$burn, $blds, $ops];
 
-			var show = function(selector) {
-				$('#Builds, #Burndowns').hide();
-				$(selector).show();
+			var timer  = 10; // reload every x minutes
+			var toggle = 1;  // toggle every 1 minute
 
-				VISIBLE = selector;
-			}
 
-			 var timer = function() {
-				// Returns a string like 1501 for 15:01, so it is easy to compare..
+			var rotateView = function( ) {
+				// Hide all, show the first
+				$(queue).hide();
+				$(queue[0]).show();
+
+				// Take the first item and move it to the back
+				queue.push( queue.shift() );
+			};
+
+			var checkTime = function() {
 				var now = (new Date().getHours() * 100 + new Date().getMinutes());
-			 	return (now >= 925 && now <= 950) ? show('#Burndowns') : show('#Builds');
-			 }
+				return (now >= 925 && now <= 1000) ? (clearInterval(rotate), $burn.show()) : true;
+			};
 
-			 // The page reloads every 3 minutes, but we could also check on load as the page reloads every 10
-			 var id = (timer(), setInterval(timer, reload*60*1000));
+			var reload = function() {
+				location.reload();
+			};
 
-			// If we are NOT in Burndown mode, toggle between builds and dashboard every minute
-			var opstimer = setInterval(function ops() {
-				if('#Burndowns' !== VISIBLE) {
-					return (BUILDS) ? ($ops.show(), $blds.hide(), BUILDS=false) : ($ops.hide(), $blds.show(), BUILDS=true);
-				}
-			}, toggle*60*1000);
+			// Every interval, rotate the view
+			var id     = setInterval(reload,     timer  * 60 * 1000);
+			var rotate = setInterval(rotateView, toggle * 60 * 1000);
+			var loop   = setInterval(checkTime,  toggle * 60 * 1000);
 
-			console.info('Page polls Jenkins every %d minutes, interval id is: %d', reload, id);
-			console.info('Page toggles between Builds and Ops every %d minutes, interval id is: %d', toggle, opstimer);
+			// On load, check the time in case we need to show the burndowns
+			checkTime();
+
+			console.info('Showing burndowns between 9:25 adn 10:00');
+			console.info('Page polls Jenkins every %d minutes, interval id is: %d', timer, id);
+			console.info('Rotating views every %d minutes, interval is: %d', toggle, rotate);
 		</script>
 	</body>
 </html>
