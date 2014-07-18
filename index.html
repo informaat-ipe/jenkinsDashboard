@@ -43,6 +43,8 @@
 
 		<iframe id="Ops" src="http://hudson.local:1984"></iframe>
 
+		<iframe id="Clock" src="clock2.html"></iframe>
+
 		<script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="components/humane-dates/humane.js" type="text/javascript" charset="utf-8"></script>
 		<script src="components/knockout/build/output/knockout-latest.js" type="text/javascript" charset="utf-8"></script>
@@ -52,11 +54,12 @@
 
 		<script type="text/javascript" charset="utf-8">
 		(function($){
-			var $burn  = $('#Burndowns');
-			var $blds  = $('#Builds');
-			var $ops   = $('#Ops');
-
-			var queue  = [$burn, $blds, $ops];
+			var queue  = [
+				$('#Burndowns'),
+				$('#Builds'),
+				$('#Ops'),
+				$('#Clock')
+			];
 
 			var timer  = 5; // reload every x minutes
 			var toggle = 0.5;  // toggle every y minutes
