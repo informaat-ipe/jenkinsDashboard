@@ -1,4 +1,6 @@
 (function ($) {
+	'set strict';
+
 	$.pluck = function(arr, key) {
 		return $.map(arr, function(e) { return e[key]; });
 	};
@@ -72,7 +74,7 @@
 		// retrieve job information (name, status, path)
 		if (jobData.color === "disabled") {
 			return;
-		};
+		}
 
 		var koJob = {
 			name: ko.observable(jobData.name),
