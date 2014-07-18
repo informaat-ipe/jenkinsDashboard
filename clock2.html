@@ -41,6 +41,10 @@
 			color: #f0f0f0;
 		}
 
+		.night #quote {
+			background: #222;
+		}
+
 		.location {
 			font-size: 24px;
 			padding: 10px 0;
@@ -274,6 +278,14 @@
 	<script src="scripts/quotes.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript" charset="utf-8">
+		setInterval(function() {
+			var now = (new Date().getHours() * 100 + new Date().getMinutes());
+			if (now <= 925 || now >= 1700) {
+				var b = document.querySelector('body');
+				return ( ! b.classList.contains("night")) && b.classList.toggle('night');
+			}
+		}, 1000);
+
 		window.onkeypress = keypress;
 
 		function keypress(event) {

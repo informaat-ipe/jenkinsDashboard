@@ -84,10 +84,9 @@
 
 				if (now >= 925 && now <= 1000) {
 					clearInterval(rotate);
-					rotate = false;
 					hide();
 					$burn.show();
-					return rotate;
+					return rotate = false;
 				} else {
 					// Restarting rotation
 					// If we are not between 9:25 and 10:00 and there is no rotation set
@@ -102,6 +101,7 @@
 			var events = function() {
 				$('body').on('keypress', function(event) {
 					// C (chart)
+					// alert(event.which);
 					if(event.which === 99) {
 						hide();
 						$burn.show();
@@ -117,15 +117,16 @@
 
 					// O (ops)
 					if(event.which === 111) {
-						hide()
+						hide();
 						$ops.show();
 						clearInterval(rotate);
 					}
 
 					// R (restart)
-					if(event.which === 94) {
-						rotate = setInterval(rotateView, toggle * 60 * 1000);
+					if(event.which === 114) {
+						// rotate = setInterval(rotateView, toggle * 60 * 1000);
 						console.log('Restarted the rotation of views');
+						rotateView();
 					}
 				});
 			}
