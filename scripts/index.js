@@ -1,12 +1,11 @@
 (function ($) {
+	'set strict';
+
 	$.pluck = function(arr, key) {
 		return $.map(arr, function(e) { return e[key]; });
 	};
 
-	// TODO: Why this hard redirection? This way it is impossible to debug locally.
-	// configuration
-
-    if (window.location.host === 'hudson.local:8080' || window.location.host === '') {
+    if (window.location.host === 'hudson.local:8080' || window.location.host === '' && window.location.protocol !== 'file:') {
         window.location.href = 'http://hudson.local/job/dashboard/ws/index.html';
     }
 
@@ -75,7 +74,7 @@
 		// retrieve job information (name, status, path)
 		if (jobData.color === "disabled") {
 			return;
-		};
+		}
 
 		var koJob = {
 			name: ko.observable(jobData.name),
