@@ -16,6 +16,18 @@
 			font: normal normal 300 16px/20px 'Open Sans', Helvetica;
 		}
 
+		section {
+			width: 900px;
+			overflow: auto;
+			margin: 20px auto;
+			text-align: center;
+		}
+
+		#quote {
+			margin-top: 20px;
+			text-align: center;
+		}
+
 		body.night {
 			background: black;
 			color: #f0f0f0;
@@ -93,6 +105,39 @@
 	</style>
 </head>
 <body>
+	<script type="text/html" id="clock-template" data-arguments="id,location,offset">
+		<div class="clock" id="{{id}}">
+			<svg xmlns="http://www.w3.org/2000/svg">
+				<g>
+					<circle cx="100" cy="100" r="100"/>
+
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate( 30 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate( 60 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate( 90 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(120 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(150 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(180 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(210 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(240 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(270 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(300 100 100)"/>
+					<line class="hour" x1="100" y1="15"  x2="100" y2="5" transform="rotate(330 100 100)"/>
+				</g>
+
+				<g>
+					<line x1="100" y1="100" x2="100" y2="45" class="hourhand"/>
+					<line x1="100" y1="100" x2="100" y2="15" class="minutehand"/>
+					<line x1="100" y1="100" x2="100" y2="5"  class="secondhand"/>
+					<circle cx="100" cy="100" r="6" class="cap" />
+				</g>
+			</svg>
+			<p class="location">{{location}}</p>
+			<p class="offset">{{offset}}</p>
+		</div>
+	</script>
+
+<section>
 	<div class="clock" id="Baarn">
 		<svg xmlns="http://www.w3.org/2000/svg">
 			<g>
@@ -212,8 +257,14 @@
 		<p class="location">Beijing, CH</p>
 		<p class="offset"><span class="day">Vandaag,</span> 6 uur later</p>
 	</div>
+</section>
+
+<section>
+	<q id="quote"></q>
+</section>
 
 	<script src="scripts/clock.js" type="text/javascript" charset="utf-8"></script>
+	<script src="scripts/quotes.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript" charset="utf-8">
 		window.onkeypress = keypress;
