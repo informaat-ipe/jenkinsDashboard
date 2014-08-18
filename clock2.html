@@ -14,6 +14,26 @@
 
 		body {
 			font: normal normal 300 16px/20px 'Open Sans', Helvetica;
+			background: #fff;
+		}
+
+		section {
+			width: 900px;
+			height: auto;
+			padding-top: 15%;
+			overflow: auto;
+			margin: 20px auto;
+			text-align: center;
+		}
+
+		#quote {
+			display: inline-block;
+			text-align: center;
+			margin-top: 20px;
+			color: #666;
+			background: #f0f0f0;
+			border-radius: 20px;
+			padding: 10px 30px;
 		}
 
 		section {
@@ -31,6 +51,10 @@
 		body.night {
 			background: black;
 			color: #f0f0f0;
+		}
+
+		.night #quote {
+			background: #222;
 		}
 
 		.location {
@@ -263,10 +287,22 @@
 	<q id="quote"></q>
 </section>
 
+	<q id="quote"></q>
+</section>
+
+
 	<script src="scripts/clock.js" type="text/javascript" charset="utf-8"></script>
 	<script src="scripts/quotes.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript" charset="utf-8">
+		setInterval(function() {
+			var now = (new Date().getHours() * 100 + new Date().getMinutes());
+			if (now <= 925 || now >= 1700) {
+				var b = document.querySelector('body');
+				return ( ! b.classList.contains("night")) && b.classList.toggle('night');
+			}
+		}, 1000);
+
 		window.onkeypress = keypress;
 
 		function keypress(event) {

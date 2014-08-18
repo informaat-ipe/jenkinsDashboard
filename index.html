@@ -43,6 +43,8 @@
 
 		<iframe id="Ops" src="http://hudson.local:1984"></iframe>
 
+		<iframe id="Clock" src="clock2.html"></iframe>
+
 		<script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="components/humane-dates/humane.js" type="text/javascript" charset="utf-8"></script>
 		<script src="components/knockout/build/output/knockout-latest.js" type="text/javascript" charset="utf-8"></script>
@@ -52,11 +54,12 @@
 
 		<script type="text/javascript" charset="utf-8">
 		(function($){
-			var $burn  = $('#Burndowns');
-			var $blds  = $('#Builds');
-			var $ops   = $('#Ops');
-
-			var queue  = [$burn, $blds, $ops];
+			var queue  = [
+				$('#Burndowns'),
+				$('#Builds'),
+				$('#Ops'),
+				$('#Clock')
+			];
 
 			var timer  = 5; // reload every x minutes
 			var toggle = 0.5;  // toggle every y minutes
@@ -81,10 +84,9 @@
 
 				if (now >= 925 && now <= 1000) {
 					clearInterval(rotate);
-					rotate = false;
 					hide();
 					$burn.show();
-					return rotate;
+					return rotate = false;
 				} else {
 					// Restarting rotation
 					// If we are not between 9:25 and 10:00 and there is no rotation set
@@ -99,6 +101,7 @@
 			var events = function() {
 				$('body').on('keypress', function(event) {
 					// C (chart)
+					// alert(event.which);
 					if(event.which === 99) {
 						hide();
 						$burn.show();
@@ -114,15 +117,16 @@
 
 					// O (ops)
 					if(event.which === 111) {
-						hide()
+						hide();
 						$ops.show();
 						clearInterval(rotate);
 					}
 
 					// R (restart)
-					if(event.which === 94) {
-						rotate = setInterval(rotateView, toggle * 60 * 1000);
+					if(event.which === 114) {
+						// rotate = setInterval(rotateView, toggle * 60 * 1000);
 						console.log('Restarted the rotation of views');
+						rotateView();
 					}
 				});
 			}
