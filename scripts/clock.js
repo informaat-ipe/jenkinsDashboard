@@ -85,3 +85,8 @@ function setClocks() {
 
 setClocks();
 setInterval(setClocks, 1000);
+
+/*
+var amsterdam = Template('Amsterdam', 0);
+document.getElementsByTagName('section')[0].innerHTML += amsterdam;
+*/
