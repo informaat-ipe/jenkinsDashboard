@@ -48,6 +48,8 @@
 
 		<iframe id="Ops" src="http://hudson.local:1984"></iframe>
 
+		<iframe id="Server" src="http://jenkins.informaat.net/job/coverage_server_3/ws/coverage-report/server/index.html"></iframe>
+
 		<iframe id="Clock" src="clock2.html"></iframe>
 
 		<script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -63,8 +65,9 @@
             var $blds   = $('#Builds');
             var $ops    = $('#Ops');
             var $clock  = $('#Clock');
-            
-            var queue   = [ $burn, $blds, $ops, $clock ];
+			var $server = $('#Server');
+
+            var queue   = [ $burn, $blds, $ops, $clock, $server ];
 
             var timer   = 5; // reload every x minutes
             var toggle  = 0.5;  // toggle every y minutes
@@ -85,7 +88,7 @@
 			};
 
 			var checkTime = function() {
-				var now = (new Date().getHours() * 100 + new Date().getMinutes()); 
+				var now = (new Date().getHours() * 100 + new Date().getMinutes());
 
 				if (now >= 925 && now <= 1000) {
 					clearInterval(rotate);
@@ -119,7 +122,8 @@
 					99: 	showFactory($burn),		// C (chart)
 					98: 	showFactory($blds),		// B (builds)
 					111: 	showFactory($ops),		// O (ops)
-					116: 	showFactory($clock),	// T (time)						
+					116: 	showFactory($clock),	// T (time)
+					115: 	showFactory($server),   // S (server coverage)
 					114: 	function() {			// R (rotate)
 						// rotate = setInterval(rotateView, toggle * 60 * 1000);
 						// console.log('Restarted the rotation of views');
@@ -129,11 +133,12 @@
 				};
 
 				$('body').on('keypress', function(event) {
+					console.log(event.which);
 					keymap[event.which]();
 				});
 			}
 
-			
+
 			// Every interval, rotate the view
 			var id     = setInterval(reload,     timer  * 60 * 1000);
 			var rotate = setInterval(rotateView, toggle * 60 * 1000);
