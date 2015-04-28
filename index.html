@@ -17,9 +17,6 @@
 		<iframe id="Clock" src="clock2.html"></iframe>
 
 		<script src="bower_components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<!-- <script src="components/humane-dates/humane.js" type="text/javascript" charset="utf-8"></script> -->
-		<!-- <script src="components/knockout/build/output/knockout-latest.js" type="text/javascript" charset="utf-8"></script> -->
-		<!-- <script src="components/knockout.mapping/build/output/knockout.mapping-latest.js" type="text/javascript" charset="utf-8"></script> -->
 
 		<script type="text/javascript" charset="utf-8">
 		(function($) {
@@ -100,7 +97,7 @@
 			var rotate = setInterval(rotateView, toggle * 60 * 1000);
 			var loop   = setInterval(checkTime,  toggle * 60 * 1000);
 
-			rotateView();
+			rotateView();	// On load, hide all views, show the first
 			checkTime();	// On load, check the time in case we need to show the burndowns
 			events();		// On load, hook up the `events`
 
