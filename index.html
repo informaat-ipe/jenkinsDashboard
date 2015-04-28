@@ -20,13 +20,13 @@
 
 		<script type="text/javascript" charset="utf-8">
 		(function($) {
-            var $burn   = $('#Burndowns');
-            var $clock  = $('#Clock');
+			var $burn   = $('#Burndowns');
+	        var $clock  = $('#Clock');
 
-            var queue   = [ $burn, $clock ];
+	        var queue   = [ $burn, $clock ];
 
-            var timer   = 5; // reload every x minutes
-            var toggle  = 0.5;  // toggle every y minutes
+	        var timer   = 5; // reload every x minutes
+	        var toggle  = 0.5;  // toggle every y minutes
 
 			function hide () {
 				queue.forEach(function(el) {
@@ -104,7 +104,6 @@
 			console.info('Showing burndowns between 9:25 and 10:00');
 			console.info('Page polls Jenkins every %s minutes, interval id is: %d', timer, id);
 			console.info('Rotating views every %s minutes, interval is: %d', toggle, rotate);
-
 		})(window.jQuery);
 		</script>
 	</body>
