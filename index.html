@@ -4,81 +4,40 @@
 		<meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Build Status Informaat CXP</title>
-		<link rel="stylesheet" href="components/open-sans-fontface/open-sans.css" type="text/css" charset="utf-8">
+		<link rel="stylesheet" href="bower_components/open-sans-fontface/open-sans.css" type="text/css" charset="utf-8">
 		<link rel="stylesheet" href="styles/styles.css" type="text/css" charset="utf-8">
 	</head>
 
 	<body>
-		<div id="Builds">
-			<h1>Informaat CXP Dashboard</h1>
-			<table>
-				<thead>
-					<tr>
-						<th class="icon" ></th>
-						<th class="name" >Branch</th>
-						<th class="client">Client</th>
-						<th class="server">Server</th>
-						<th class="mesg" >Message</th>
-						<th class="person">By</th>
-						<th class="time">Commit</th>
-					</tr>
-				</thead>
-				<tbody data-bind="foreach: $root">
-					<tr data-bind="css: {'success': buildSuccess, failure: buildFailed, pending: buildPending}">
-						<td></td>
-						<td data-bind="text: name"></td>
-						<td class="number" data-bind="css: {'low-coverage': coverages.clientLow, 'coverage-ok': !coverages.clientLow()}"><span data-bind="text: coverages.client"></span></td>
-						<td class="number" data-bind="css: {'low-coverage': coverages.serverLow, 'coverage-ok': !coverages.serverLow()}"><span data-bind="text: coverages.server"></span></td>
-						<td data-bind="text: buildStatus.message"></td>
-						<td data-bind="text: buildStatus.person"></td>
-						<td data-bind="text: buildStatus.time" class="time"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
 		<div id="Burndowns">
 			<!-- CORE -->
 			<img src="https://docs.google.com/a/informaat-cxp.com/spreadsheet/oimg?key=0AnDrevh6VK38dFRQdkFnYTNIX25IZUhZcWVWZDNjd1E&oid=2&zx=kdarrwxq04kc" />
-			<!-- OPS -->
-			<img src="https://docs.google.com/a/informaat-cxp.com/spreadsheet/oimg?key=0An0g1Y02kf0IdHVHNm8wdmhvTUcwdTgyQlBXaEY2bWc&oid=2&zx=1i9yvpm5r47r" />
-			<!-- UX -->
-			<img src="https://docs.google.com/a/informaat-cxp.com/spreadsheet/oimg?key=0AlYGoVzIaT-bdEg2elpENmZrOUhVVzNaZjdOdzVGMVE&oid=2&zx=fp0bbsef14oz" />
 		</div>
-
-		<iframe id="Ops" src="http://hudson.local:1984"></iframe>
-
-		<iframe id="Server" src="http://jenkins.informaat.net/job/coverage_server_3/ws/coverage-report/server/index.html"></iframe>
 
 		<iframe id="Clock" src="clock2.html"></iframe>
 
-		<script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="components/humane-dates/humane.js" type="text/javascript" charset="utf-8"></script>
-		<script src="components/knockout/build/output/knockout-latest.js" type="text/javascript" charset="utf-8"></script>
-		<script src="components/knockout.mapping/build/output/knockout.mapping-latest.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="scripts/index.js"></script>
+		<script src="bower_components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- <script src="components/humane-dates/humane.js" type="text/javascript" charset="utf-8"></script> -->
+		<!-- <script src="components/knockout/build/output/knockout-latest.js" type="text/javascript" charset="utf-8"></script> -->
+		<!-- <script src="components/knockout.mapping/build/output/knockout.mapping-latest.js" type="text/javascript" charset="utf-8"></script> -->
 
 		<script type="text/javascript" charset="utf-8">
 		(function($) {
             var $burn   = $('#Burndowns');
-            var $blds   = $('#Builds');
-            var $ops    = $('#Ops');
             var $clock  = $('#Clock');
-			var $server = $('#Server');
 
-            var queue   = [ $burn, $blds, $ops, $clock, $server ];
+            var queue   = [ $burn, $clock ];
 
             var timer   = 5; // reload every x minutes
             var toggle  = 0.5;  // toggle every y minutes
 
-			var hide = function() {
+			function hide () {
 				queue.forEach(function(el) {
 					el.hide();
 				});
 			};
 
-			var rotateView = function( ) {
+			function rotateView () {
 				// Hide all, show the first
 				hide();
 				queue[0].show();
@@ -87,7 +46,7 @@
 				queue.push( queue.shift() );
 			};
 
-			var checkTime = function() {
+			function checkTime () {
 				var now = (new Date().getHours() * 100 + new Date().getMinutes());
 
 				if (now >= 925 && now <= 1000) {
@@ -105,11 +64,11 @@
 				};
 			};
 
-			var reload = function() {
+			function reload() {
 				location.reload();
 			};
 
-			var events = function() {
+			function events() {
 				var showFactory = function($el) {
 					return function show() {
 						hide();
@@ -120,10 +79,7 @@
 
 				var keymap = {
 					99: 	showFactory($burn),		// C (chart)
-					98: 	showFactory($blds),		// B (builds)
-					111: 	showFactory($ops),		// O (ops)
 					116: 	showFactory($clock),	// T (time)
-					115: 	showFactory($server),   // S (server coverage)
 					114: 	function() {			// R (rotate)
 						// rotate = setInterval(rotateView, toggle * 60 * 1000);
 						// console.log('Restarted the rotation of views');
@@ -144,6 +100,7 @@
 			var rotate = setInterval(rotateView, toggle * 60 * 1000);
 			var loop   = setInterval(checkTime,  toggle * 60 * 1000);
 
+			rotateView();
 			checkTime();	// On load, check the time in case we need to show the burndowns
 			events();		// On load, hook up the `events`
 
