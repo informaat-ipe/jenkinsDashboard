@@ -8,7 +8,7 @@ body {
 	cursor: none;
 }
 
-#Burndowns, #Clock {
+#Chart, #Burndowns, #Clock {
 	display: none;
 	position: absolute;
 	top: 0; right: 0; bottom: 0; left: 0;
@@ -32,3 +32,8 @@ body {
 		transform: translateY(-50%);
 		height: 100%;
 	}
+
+#Burndowns iframe {
+	width: 100%; height: 100%;
+	border: none;
+}
